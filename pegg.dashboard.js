@@ -14,7 +14,7 @@ Keen.ready(function(){
     groupBy: "keen.timestamp",
     interval: "daily",
     targetProperty: "milliseconds",
-    timeframe: "this_14_days",
+    timeframe: "this_7_days",
     timezone: "UTC"
   });
   client.draw(pageviews_timeline, document.getElementById("chart-01"), {
@@ -73,99 +73,59 @@ Keen.ready(function(){
 
 
   // ----------------------------------------
-  // Impressions timeline
+  // Gender
   // ----------------------------------------
-  //var impressions_timeline = new Keen.Query("count", {
-  //  eventCollection: "impressions",
-  //  groupBy: "ad.advertiser",
-  //  interval: "hourly",
-  //  timeframe: {
-  //    start: "2014-05-04T00:00:00.000Z",
-  //    end: "2014-05-05T00:00:00.000Z"
-  //  }
-  //});
-  //client.draw(impressions_timeline, document.getElementById("chart-03"), {
-  //  chartType: "columnchart",
-  //  title: false,
-  //  height: 250,
-  //  width: "auto",
-  //  chartOptions: {
-  //    chartArea: {
-  //      height: "75%",
-  //      left: "10%",
-  //      top: "5%",
-  //      width: "60%"
-  //    },
-  //    bar: {
-  //      groupWidth: "85%"
-  //    },
-  //    isStacked: true
-  //  }
-  //});
-  //
-  //
+  var gender = new Keen.Query("count_unique", {
+    eventCollection: "demographics",
+    groupBy: "gender",
+    targetProperty: "userId",
+    timezone: "UTC"
+  });
+  client.draw(gender, document.getElementById("chart-03"), {
+    title: false
+  });
+
+
+  // ----------------------------------------
+  // Age
+  // ----------------------------------------
+  var age = new Keen.Query("count_unique", {
+    eventCollection: "demographics",
+    groupBy: "age_range",
+    targetProperty: "userId",
+    timezone: "UTC"
+  });
+  client.draw(age, document.getElementById("chart-04"), {
+    title: false
+  });
+
+
   //// ----------------------------------------
-  //// Impressions timeline (device)
+  //// Daily Active Users
   //// ----------------------------------------
-  //var impressions_timeline_by_device = new Keen.Query("count", {
-  //  eventCollection: "impressions",
-  //  groupBy: "user.device_info.device.family",
-  //  interval: "hourly",
-  //  timeframe: {
-  //    start: "2014-05-04T00:00:00.000Z",
-  //    end: "2014-05-05T00:00:00.000Z"
-  //  }
-  //});
-  //client.draw(impressions_timeline_by_device, document.getElementById("chart-04"), {
-  //  chartType: "columnchart",
-  //  title: false,
-  //  height: 250,
-  //  width: "auto",
-  //  chartOptions: {
-  //    chartArea: {
-  //      height: "75%",
-  //      left: "10%",
-  //      top: "5%",
-  //      width: "60%"
-  //    },
-  //    bar: {
-  //      groupWidth: "85%"
-  //    },
-  //    isStacked: true
-  //  }
-  //});
-  //
-  //
+  var query = new Keen.Query("count_unique", {
+    eventCollection: "showPage",
+    interval: "daily",
+    targetProperty: "userId",
+    timeframe: "this_7_days",
+    timezone: "UTC"
+  });
+  client.draw(query, document.getElementById("chart-05"), {
+    title: false
+  });
+
   //// ----------------------------------------
-  //// Impressions timeline (country)
+  //// Weekly Active Users
   //// ----------------------------------------
-  //var impressions_timeline_by_country = new Keen.Query("count", {
-  //  eventCollection: "impressions",
-  //  groupBy: "user.geo_info.country",
-  //  interval: "hourly",
-  //  timeframe: {
-  //    start: "2014-05-04T00:00:00.000Z",
-  //    end: "2014-05-05T00:00:00.000Z"
-  //  }
-  //});
-  //client.draw(impressions_timeline_by_country, document.getElementById("chart-05"), {
-  //  chartType: "columnchart",
-  //  title: false,
-  //  height: 250,
-  //  width: "auto",
-  //  chartOptions: {
-  //    chartArea: {
-  //      height: "75%",
-  //      left: "10%",
-  //      top: "5%",
-  //      width: "60%"
-  //    },
-  //    bar: {
-  //      groupWidth: "85%"
-  //    },
-  //    isStacked: true
-  //  }
-  //});
+  var query = new Keen.Query("count_unique", {
+    eventCollection: "showPage",
+    targetProperty: "userId",
+    timeframe: "this_7_days",
+    timezone: "UTC"
+  });
+  client.draw(query, document.getElementById("chart-07"), {
+    label: "some thing"
+  });
 
 
 });

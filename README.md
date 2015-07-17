@@ -28,3 +28,5 @@ Pegg Dashboard
 - Average # of cards played per user
 - Average # of cards created per user
 - Weekly/monthly active users
+- % Male/Female
+- Age breakdown
