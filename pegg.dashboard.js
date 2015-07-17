@@ -43,7 +43,7 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   client.draw(averageLoadTime, document.getElementById("chart-06"), {
-    // Custom configuration here
+    title: "Average Load Time (s)"
   });
 
 
@@ -82,7 +82,15 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   client.draw(gender, document.getElementById("chart-03"), {
-    title: false
+    chartType: "piechart",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      }
+    }
   });
 
 
@@ -96,7 +104,15 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   client.draw(age, document.getElementById("chart-04"), {
-    title: false
+    chartType: "piechart",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      }
+    }
   });
 
 
@@ -111,7 +127,14 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   client.draw(query, document.getElementById("chart-05"), {
-    title: false
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      }
+    }
   });
 
   //// ----------------------------------------
@@ -124,7 +147,7 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   client.draw(query, document.getElementById("chart-07"), {
-    label: "some thing"
+    title: "Weekly Active Users"
   });
 
 
