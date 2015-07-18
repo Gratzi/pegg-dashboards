@@ -323,4 +323,42 @@ Keen.ready(function(){
     }
   });
 
+  //// ----------------------------------------
+  //// Average CardsPlayed per session this week
+  //// ----------------------------------------
+  var cardsPerSession = new Keen.Query("count", {
+    eventCollection: "userAction",
+    filters: [{"operator":"eq","property_name":"type","property_value":"cardPlay"}],
+      //,{"operator":"exists","property_name":"peggeeId","property_value":true}],
+    groupBy: "sessionId",
+    timezone: "UTC",
+    timeframe: "this_7_days"
+  });
+
+  var cardsPerSessionMetric = new Keen.Dataviz()
+    .el(document.getElementById("chart-14"))
+    .chartType("metric")
+    .prepare(); // start spinner
+
+  var req = client.run(cardsPerSession, function(err, res){
+    if (err) {
+      // Display the API error
+      cardsPerSessionMetric.error(err.message);
+    }
+    else {
+      var cardsPlayed = res.result;
+      var totalCards = 0
+      // Handle the response
+      for(var i=0; i<cardsPlayed.length; i++){
+        totalCards += cardsPlayed[i].result
+      }
+
+      cardsPerSessionMetric
+        //.parseRequest(this)
+        .title("Average Cards/Session")
+        .data({result: totalCards/cardsPlayed.length})
+        .render();
+    }
+  });
+
 });
