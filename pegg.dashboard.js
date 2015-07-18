@@ -268,11 +268,11 @@ Keen.ready(function(){
   //// ----------------------------------------
   //// Weekly GameTime by User this week
   //// ----------------------------------------
-  var weeklyGameTime = new Keen.Query("maximum", {
+  var weeklyGameTime = new Keen.Query("sum", {
     eventCollection: "userAction",
     filters: [{"operator":"exists","property_name":"userId","property_value":true}],
     groupBy: "userId",
-    targetProperty: "sessionLength",
+    targetProperty: "lastEvent.eventLength",
     timeframe: "this_7_days",
     timezone: "UTC"
   });
