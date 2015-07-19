@@ -1,6 +1,6 @@
 var client = new Keen({
-  projectId: "55a6deb6c1e0ab70d10d1a39",
-  readKey: "6b629b2a281928af8564f6fe0ef8167129b823a5c244b4dbd692b614583ca0ed03173d6f534fbb888295d43554e075820f1714916846d38da9a2433685b644b6b0067eb7892ae3d0500cdd5c9304fb57ccf39825077832043e9a353e6e4c29fcd2f8170e3f9e2db4c38c4fd89e9aa61b"
+  projectId: "55a49e79c1e0ab6df6508279",
+  readKey: "a3e8a1c1aaf369027d32d5ef625dd2e88e7f7f93ce101489f509200e5bca098f2c50c5104f70c9835feee4b17d441bd6be8fb9ef2c4315bbaa7563a59bf994615e54765223e2f070421eb84a51ceb5a5e4662a625f5f18a919e2212712391b500ee0789fc8be176466ff0b45604b1a77"
 });
 
 Keen.ready(function(){
@@ -42,7 +42,7 @@ Keen.ready(function(){
     targetProperty: "milliseconds",
     timezone: "UTC"
   });
-  client.draw(averageLoadTime, document.getElementById("chart-06"), {
+  client.draw(averageLoadTime, document.getElementById("averageLoadTime"), {
     title: "Average Load Time (ms)"
   });
 
@@ -144,14 +144,14 @@ Keen.ready(function(){
   //// ----------------------------------------
   //// Weekly Active Users
   //// ----------------------------------------
-  var query = new Keen.Query("count_unique", {
+  var weeklyActiveUsers = new Keen.Query("count_unique", {
     eventCollection: "userAction",
     targetProperty: "userId",
     filters: [{"operator":"exists","property_name":"userId","property_value":true}],
     timeframe: "this_7_days",
     timezone: "UTC"
   });
-  client.draw(query, document.getElementById("chart-07"), {
+  client.draw(weeklyActiveUsers, document.getElementById("weeklyActiveUsers"), {
     title: "Weekly Active Users"
   });
 
@@ -160,6 +160,7 @@ Keen.ready(function(){
   //// ----------------------------------------
   var query = new Keen.Query("count", {
     eventCollection: "userAction",
+    filters: [{"operator":"exists","property_name":"page","property_value":true}],
     groupBy: "page",
     timezone: "UTC"
   });
@@ -212,7 +213,7 @@ Keen.ready(function(){
   //// Average Session length
   //// ----------------------------------------
   var sessionMetric = new Keen.Dataviz()
-    .el(document.getElementById("chart-11"))
+    .el(document.getElementById("sessionLengthMetric"))
     .chartType("metric")
     .prepare(); // start spinner
 
@@ -231,8 +232,8 @@ Keen.ready(function(){
 
       sessionMetric
         //.parseRequest(this)
-        .title("Average Session Length (s)")
-        .data({result: totalTime/sessionTimes.length})
+        .title("Average Session Length (mins)")
+        .data({result: totalTime/sessionTimes.length / 60})
         .render();
     }
   });
@@ -298,7 +299,7 @@ Keen.ready(function(){
   //// Average GameTime this week
   //// ----------------------------------------
   var gameTimeMetric = new Keen.Dataviz()
-    .el(document.getElementById("chart-13"))
+    .el(document.getElementById("gameTimeMetric"))
     .chartType("metric")
     .prepare(); // start spinner
 
@@ -317,8 +318,8 @@ Keen.ready(function(){
 
       gameTimeMetric
         //.parseRequest(this)
-        .title("Average Game Time (s)")
-        .data({result: totalTime/gameTimes.length})
+        .title("Average Game Time/Week (mins)")
+        .data({result: totalTime/gameTimes.length / 60})
         .render();
     }
   });
@@ -336,7 +337,7 @@ Keen.ready(function(){
   });
 
   var cardsPerSessionMetric = new Keen.Dataviz()
-    .el(document.getElementById("chart-14"))
+    .el(document.getElementById("cardsPerSessionMetric"))
     .chartType("metric")
     .prepare(); // start spinner
 
